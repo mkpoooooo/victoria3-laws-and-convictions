@@ -1,0 +1,13 @@
+export type Language = 'zh-CN' | 'en';
+export type AnswerMode = 'quick' | 'detailed';
+export type QuickAnswers = Record<string, Record<string, 1 | -1>>;
+export type Law = { id: string; name: string; english: string; icon: string; description: string; descriptionEnglish?: string; summary: string; summaryEnglish?: string; source: string };
+export type Group = { id: string; name: string; english: string; category: string; laws: Law[]; source: string };
+export type Ideology = { id: string; name: string; english: string; icon: string; description: string; descriptionEnglish?: string; character: boolean; stances: Record<string, Record<string, number>>; source: string };
+export type IG = { id: string; name: string; english: string; description: string; descriptionEnglish?: string; icon: string; ideologies: string[]; source: string };
+export type Dataset = { meta: { targetVersion: string; buildId: string; update: string; verified: boolean; dataNote: string; sourceFiles: number }; groups: Group[]; ideologies: Ideology[]; igs: IG[] };
+export type Ranking = string[][];
+export type ParseResult = { tiers: Ranking; error: string | null; valid: boolean; count: number };
+export type Evidence = { groupId: string; first: string; second: string; mode?: AnswerMode; user: number; candidate: number | null; agreement: number; components?: { id: string; preference: number; agreement: number }[] };
+export type Match = { id: string; kind: 'ideology' | 'ig'; score: number; groupCount: number; pairCount: number; groups: { id: string; score: number; pairs: number }[]; evidence: Evidence[] };
+export type Assessment = { mode?: AnswerMode; validGroups: number; preliminary: boolean; ideologies: Match[]; supplementaryIdeologies?: Match[]; igs: Match[]; primaryIdeologies: Match[]; primaryIGs: Match[] };
